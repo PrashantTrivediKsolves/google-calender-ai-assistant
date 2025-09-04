@@ -1,6 +1,5 @@
 import express from "express";
 import { google } from "googleapis";
-
 const app = express();
 
 const port = process.env.PORT;
@@ -30,6 +29,8 @@ app.get("/auth/google/callback", async (req, res) => {
   console.log("Tokens", tokens);
   res.send("Connected ✅ You can close this tab now.");
 });
+
+
 
 app.listen(port, () => {
   console.log(`Server is running on PORT ${port}`);

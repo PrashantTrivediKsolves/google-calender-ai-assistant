@@ -4,6 +4,9 @@ import { google } from "googleapis";
 import crypto from "node:crypto";
 import { TavilySearch } from "@langchain/tavily";
 import contactDB from "./emailDB.json";
+import express from "express";
+import { http } from "./index.ts";
+import cors from "cors";
 
 // const oauth2Client = new google.auth.OAuth2(
 //   process.env.GOOGLE_CLIENT_ID,
@@ -90,8 +93,10 @@ const oauth2Client = new google.auth.OAuth2(
 oauth2Client.setCredentials({
   refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
 });
-
-const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+// Allow requests from React app
+// Enable CORS for all routes
+ const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+// 3️⃣ Get upcoming events
 
 const getEventSchema = z.object({
   q: z.string().optional().describe(`Search query (summary, description, location, attendee, or organizer)`),
@@ -328,4 +333,5 @@ export const webSearch = new TavilySearch({
   maxResults: 3,
   topic: "general",
 });
+
 
