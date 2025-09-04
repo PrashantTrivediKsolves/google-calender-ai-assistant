@@ -122,7 +122,7 @@ const systemPrompt = `You are an smart ai assistant and you name is ${
 import express from "express";
 import cors from "cors";
 import { ChatGroq } from "@langchain/groq";
-// import { calendar } from "./tools";
+import { calendar } from "./tools";
 import {
   createEventTool,
   deleteEventTool,
@@ -269,21 +269,21 @@ http.get("/health", (_req, res) => {
   res.json({ status: "ok", time: new Date().toISOString() });
 });
 
-// http.get("/events", async (req, res) => {
-//   try {
-//     const response = await calendar.events.list({
-//       calendarId: "primary",
-//       timeMin: new Date().toISOString(),
-//       maxResults: 10,
-//       singleEvents: true,
-//       orderBy: "startTime",
-//     });
-//     res.json(response.data.items);
-//   } catch (error) {
-//     console.error("Error fetching events:", error);
-//     res.status(500).json({ error: "Failed to fetch events" });
-//   }
-// });
+http.get("/events", async (req, res) => {
+  try {
+    const response = await calendar.events.list({
+      calendarId: "primary",
+      timeMin: new Date().toISOString(),
+      maxResults: 10,
+      singleEvents: true,
+      orderBy: "startTime",
+    });
+    res.json(response.data.items);
+  } catch (error) {
+    console.error("Error fetching events:", error);
+    res.status(500).json({ error: "Failed to fetch events" });
+  }
+});
 
 http.listen(PORT, () => {
   console.log(`Assistant API listening at http://localhost:${PORT}`);

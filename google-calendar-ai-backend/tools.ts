@@ -95,7 +95,7 @@ oauth2Client.setCredentials({
 });
 // Allow requests from React app
 // Enable CORS for all routes
- const calendar = google.calendar({ version: "v3", auth: oauth2Client });
+export const calendar = google.calendar({ version: "v3", auth: oauth2Client });
 // 3️⃣ Get upcoming events
 
 const getEventSchema = z.object({
